@@ -1,0 +1,43 @@
+CREATE DATABASE MiniMarketDB;
+GO
+
+USE MiniMarketDB;
+GO
+
+-- Tabla de categorias
+CREATE TABLE Categories
+(
+    CategoryId INT IDENTITY(1,1) PRIMARY KEY,
+    CategoryName NVARCHAR(100) NOT NULL UNIQUE
+);
+GO
+
+-- Tabla de marcas
+CREATE TABLE Brands
+(
+    BrandId INT IDENTITY(1,1) PRIMARY KEY,
+    BrandName NVARCHAR(100) NOT NULL UNIQUE
+);
+GO
+
+-- Tabla de productos
+CREATE TABLE Products
+(
+    ProductId INT IDENTITY(1,1) PRIMARY KEY,
+    ProductName NVARCHAR(150) NOT NULL UNIQUE,
+    Stock INT NOT NULL DEFAULT 0 CHECK (Stock >= 0),
+
+    CategoryId INT NOT NULL,
+    BrandId INT NOT NULL,
+
+    FOREIGN KEY (CategoryId)
+        REFERENCES Categories(CategoryId),
+
+    FOREIGN KEY (BrandId)
+        REFERENCES Brands(BrandId)
+);
+GO
+
+SELECT * FROM Products
+SELECT * FROM Categories
+SELECT * FROM Brands
